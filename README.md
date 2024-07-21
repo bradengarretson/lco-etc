@@ -1,12 +1,11 @@
 # lco_etc
 
 [![Template](https://img.shields.io/badge/Template-LINCC%20Frameworks%20Python%20Project%20Template-brightgreen)](https://lincc-ppt.readthedocs.io/en/latest/)
-[![PyPI](https://img.shields.io/pypi/v/lco_etc?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/lco_etc/)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bradengarretson/lco_etc/smoke-test.yml)](https://github.com/bradengarretson/lco_etc/actions/workflows/smoke-test.yml)
-[![Codecov](https://codecov.io/gh/bradengarretson/lco_etc/branch/main/graph/badge.svg)](https://codecov.io/gh/bradengarretson/lco_etc)
+[![PyPI](https://img.shields.io/pypi/v/lco_etc?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/lco-etc/)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bradengarretson/lco-etc/smoke-test.yml)](https://github.com/bradengarretson/lco-etc/actions/workflows/smoke-test.yml)
+[![Codecov](https://codecov.io/gh/bradengarretson/lco-etc/branch/main/graph/badge.svg)](https://codecov.io/gh/bradengarretson/lco-etc)
 [![Read The Docs](https://img.shields.io/readthedocs/lco-etc)](https://lco-etc.readthedocs.io/)
-[![Benchmarks](https://img.shields.io/github/actions/workflow/status/bradengarretson/lco_etc/asv-main.yml?label=benchmarks)](https://bradengarretson.github.io/lco_etc/)
-
+[![Benchmarks](https://img.shields.io/github/actions/workflow/status/bradengarretson/lco-etc/asv-main.yml?label=benchmarks)](https://bradengarretson.github.io/lco-etc/)
 This project was automatically generated using the LINCC-Frameworks [python-project-template](https://github.com/lincc-frameworks/python-project-template).
 
 For more information about the project template see the [documentation](https://lincc-ppt.readthedocs.io/en/latest/).
