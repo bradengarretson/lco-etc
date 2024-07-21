@@ -3,7 +3,7 @@
 For more information on writing benchmarks:
 https://asv.readthedocs.io/en/stable/writing_benchmarks.html."""
 
-from src.lco_etc.etc import (
+from lco_etc.etc import (
     exposure_time_calc,
     moon_phase_to_numeric,
     radial_integrate_gauss,
