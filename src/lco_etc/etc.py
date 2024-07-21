@@ -89,7 +89,7 @@ def telescope_to_index(telescope: str) -> int:
 
 def exposure_time_calc(
     snr: float,
-    mag: float,
+    magnitude: float,
     etime: float,
     telescope: str,
     filter: str,
@@ -117,7 +117,7 @@ def exposure_time_calc(
     ----------
     snr : float
         Signal-to-noise ratio
-    mag : float
+    magnitude : float
         Magnitude
     etime : float
         Exposure time
@@ -136,11 +136,11 @@ def exposure_time_calc(
     -------
     dict
         A dictionary containing the calculated values:
-        - s_nt : float
+        - snr : float
             Signal-to-noise ratio
-        - mag : float
+        - magnitude : float
             Magnitude
-        - t : float
+        - exposure_time : float
             Exposure time
         - saturated : bool
             True if the source is saturated
@@ -155,13 +155,13 @@ def exposure_time_calc(
               sbig, sinistro, qhy, spectral, muscat3"
         )
 
-    # Check to see that at least two out [snr, mag, etime] are provided
-    if sum([snr is not None, mag is not None, etime is not None]) < 2:
-        raise ValueError("At least two of the following values must be provided: snr, mag, etime")
+    # Check to see that at least two out [snr, magnitude, etime] are provided
+    if sum([snr is not None, magnitude is not None, etime is not None]) < 2:
+        raise ValueError("At least two of the following values must be provided: snr, magnitude, etime")
 
     # If all three values are provided, raise an error
-    if sum([snr is not None, mag is not None, etime is not None]) == 3:
-        raise ValueError("Only two of the following values should be provided: snr, mag, etime")
+    if sum([snr is not None, magnitude is not None, etime is not None]) == 3:
+        raise ValueError("Only two of the following values should be provided: snr, magnitude, etime")
 
     if filter not in Filt:
         raise ValueError(
@@ -189,26 +189,28 @@ def exposure_time_calc(
 
     # Determine which value to calculate (e, m, or S/N)
     result = None
-    if snr is not None and mag is not None and etime is None:
-        t = 1.0
+    if snr is not None and magnitude is not None and etime is None:
+        exposure_time = 1.0
         result = "e"
-    elif snr is not None and mag is None and etime is not None:
+    elif snr is not None and magnitude is None and etime is not None:
         magt = 30.0
         result = "m"
-    elif snr is None and mag is not None and etime is not None:
+    elif snr is None and magnitude is not None and etime is not None:
         s_nt = 1.0
         result = "s"
 
     endloop = 0
 
     while endloop < 1:
-        mag_at_airmass = mag + airmass_correction if mag is not None else magt + airmass_correction
+        mag_at_airmass = (
+            magnitude + airmass_correction if magnitude is not None else magt + airmass_correction
+        )
         Nobj = math.pow(10.0, -0.4 * (mag_at_airmass - zeropoint))
         Nbkgd = math.pow(10.0, -0.4 * (skymag - zeropoint))
         # NbDN = Nbkgd * apixel * apixel
-        NeObj = Nobj * (etime if etime is not None else t)
-        NeBkgd = Nbkgd * Nas * (etime if etime is not None else t)
-        NeDark = Npix * dark * (etime if etime is not None else t)
+        NeObj = Nobj * (etime if etime is not None else exposure_time)
+        NeBkgd = Nbkgd * Nas * (etime if etime is not None else exposure_time)
+        NeDark = Npix * dark * (etime if etime is not None else exposure_time)
         NeRon = Npix * ron * ron
         s_nt = NeObj / math.sqrt(NeObj + NeBkgd + NeDark + NeRon)
 
@@ -227,7 +229,7 @@ def exposure_time_calc(
 
         if result == "e":
             if s_nt < snr:
-                t += 1
+                exposure_time += 1
             else:
                 endloop = 1
         elif result == "m":
@@ -241,9 +243,9 @@ def exposure_time_calc(
 
     # Rounding and returning results
     output = {
-        "s_nt": round(10.0 * s_nt) / 10.0,
-        "mag": round(10.0 * mag) / 10.0 if mag is not None else round(10.0 * magt) / 10.0,
-        "t": t if result == "e" else etime,
+        "snr": round(10.0 * s_nt) / 10.0,
+        "magnitude": round(10.0 * magnitude) / 10.0 if magnitude is not None else round(10.0 * magt) / 10.0,
+        "exposure_time": exposure_time if result == "e" else etime,
         "saturated": saturated,
         "mag_system": "Vega" if Filt.index(filter) < 5 else "AB",
     }
