@@ -39,5 +39,5 @@ print(result)
 ### Output
 
 ``` python
-{'s_nt': 10.2, 'mag': 20.0, 't': 29.0, 'saturated': False, 'mag_system': 'Vega'}
+{'snr': 10.2, 'magnitude': 20.0, 'exposure_time': 29.0, 'saturated': False, 'mag_system': 'Vega'}
 ```

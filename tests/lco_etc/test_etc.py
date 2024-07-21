@@ -57,31 +57,73 @@ def test_exposure_time_calc():
     Test the exposure_time_calc function.
 
     This test verifies that the exposure_time_calc function correctly calculates
-    the signal-to-noise ratio (s_nt), magnitude (mag), exposure time (t), saturation status,
+    the signal-to-noise ratio (snr), magnitude (magnitude), exposure time (exposure_time), saturation status,
     and magnitude system for given inputs. It also checks that the function raises
     a ValueError for invalid input combinations and invalid filters.
     """
     # Provided test cases with expected outputs
     result = exposure_time_calc(10.0, 20, None, "sinistro", "V", "new", 1.2)
-    assert result == {"s_nt": 10.2, "mag": 20.0, "t": 29.0, "saturated": False, "mag_system": "Vega"}
+    assert result == {
+        "snr": 10.2,
+        "magnitude": 20.0,
+        "exposure_time": 29.0,
+        "saturated": False,
+        "mag_system": "Vega",
+    }
 
     result = exposure_time_calc(None, 15.0, 1.0, "sinistro", "R", "half", 1.2)
-    assert result == {"s_nt": 40.5, "mag": 15.0, "t": 1.0, "saturated": False, "mag_system": "Vega"}
+    assert result == {
+        "snr": 40.5,
+        "magnitude": 15.0,
+        "exposure_time": 1.0,
+        "saturated": False,
+        "mag_system": "Vega",
+    }
 
     result = exposure_time_calc(15, None, 1.0, "sbig", "U", "full", 3)
-    assert result == {"s_nt": 15.2, "mag": 9.3, "t": 1.0, "saturated": False, "mag_system": "Vega"}
+    assert result == {
+        "snr": 15.2,
+        "magnitude": 9.3,
+        "exposure_time": 1.0,
+        "saturated": False,
+        "mag_system": "Vega",
+    }
 
     result = exposure_time_calc(20, 15.0, None, "spectral", "r", "new", 1.5)
-    assert result == {"s_nt": 82.3, "mag": 15.0, "t": 1.0, "saturated": False, "mag_system": "AB"}
+    assert result == {
+        "snr": 82.3,
+        "magnitude": 15.0,
+        "exposure_time": 1.0,
+        "saturated": False,
+        "mag_system": "AB",
+    }
 
     result = exposure_time_calc(None, 15.0, 1.0, "qhy", "i", "new", 2.7)
-    assert result == {"s_nt": 6.7, "mag": 15.0, "t": 1.0, "saturated": False, "mag_system": "AB"}
+    assert result == {
+        "snr": 6.7,
+        "magnitude": 15.0,
+        "exposure_time": 1.0,
+        "saturated": False,
+        "mag_system": "AB",
+    }
 
     result = exposure_time_calc(5, None, 1.0, "muscat3", "g", "new", 1.2)
-    assert result == {"s_nt": 5.1, "mag": 18.2, "t": 1.0, "saturated": False, "mag_system": "AB"}
+    assert result == {
+        "snr": 5.1,
+        "magnitude": 18.2,
+        "exposure_time": 1.0,
+        "saturated": False,
+        "mag_system": "AB",
+    }
 
     result = exposure_time_calc(None, 15.0, 1000, "sinistro", "R", "half", 1.2)
-    assert result == {"s_nt": 1742.4, "mag": 15.0, "t": 1000, "saturated": True, "mag_system": "Vega"}
+    assert result == {
+        "snr": 1742.4,
+        "magnitude": 15.0,
+        "exposure_time": 1000,
+        "saturated": True,
+        "mag_system": "Vega",
+    }
 
     # Additional checks for invalid inputs
     with pytest.raises(ValueError):
